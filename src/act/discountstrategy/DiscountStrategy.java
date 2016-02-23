@@ -9,12 +9,6 @@ package act.discountstrategy;
  *
  * @author athanas1
  */
-public class FakeDatabase {
-    private Customer[] customers = {
-      new Customer("100","Bob James"),
-      new Customer("200","Sally Smith"),
-      new Customer("300","Peter Piper")
-    };
-    
-    private Product[] products = new Product[3];
+public interface DiscountStrategy {
+    public abstract double getDiscountAmt(int qty,double unitCost);
 }
