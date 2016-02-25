@@ -10,6 +10,7 @@ package act.discountstrategy;
  * @author athanas1
  */
 public class Product {
+
     private String prodId;
     private String prodName;
     private double unitCost;
@@ -22,7 +23,6 @@ public class Product {
         setDiscount(discount);
     }
 
-    
     public final String getProdId() {
         return prodId;
     }
@@ -37,7 +37,7 @@ public class Product {
     }
 
     public final void setProdName(String prodName) {
-         // needs validation
+        // needs validation
         this.prodName = prodName;
     }
 
@@ -46,7 +46,7 @@ public class Product {
     }
 
     public final void setUnitCost(double unitCost) {
-         // needs validation
+        // needs validation
         this.unitCost = unitCost;
     }
 
@@ -55,8 +55,8 @@ public class Product {
     }
 
     public final void setDiscount(DiscountStrategy discount) {
-         // needs validation
+        // needs validation
         this.discount = discount;
     }
-    
+
 }

@@ -10,17 +10,15 @@ package act.discountstrategy;
  * @author Alex
  */
 public class LineItem {
+
     private Product product;
     private int qty;
 
-    public LineItem(Product product, int qty) {
-        setProduct(product);
-        setQty(qty);
+    public LineItem(String prodId, int qty, DatabaseStrategy db) {
+        this.qty = qty;
+        setProduct(db.findProductById(prodId));
     }
 
-    
-    
-    
     public final Product getProduct() {
         return product;
     }
@@ -38,6 +36,5 @@ public class LineItem {
         // needs validation
         this.qty = qty;
     }
-    
-    
+
 }

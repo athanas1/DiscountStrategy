@@ -10,20 +10,20 @@ package act.discountstrategy;
  * @author athanas1
  */
 public class Register {
-    
+
     private Receipt receipt;
     private String storeName;
-   
-    
-    public final void startNewSale(String custId, DatabaseStrategy db){
-        receipt = new Receipt(custId,db);
+
+    public final void startNewSale(String custId, DatabaseStrategy db) {
+        receipt = new Receipt(custId, db);
     }
-    public final void endSale(){
-        
+
+    public final void endSale() {
+
     }
-    
-    public final void addItemToSale(String prodId, int qty){
-        
+
+    public final void addItemToSale(String prodId, int qty) {
+        receipt.addItemToReceipt(prodId, qty);
     }
 
     public final Receipt getReceipt() {
@@ -43,5 +43,5 @@ public class Register {
         // Needs validation
         this.storeName = storeName;
     }
-            
+
 }
