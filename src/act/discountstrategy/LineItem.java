@@ -17,8 +17,16 @@ public class LineItem {
     public LineItem(String prodId, int qty, DatabaseStrategy db) {
         this.qty = qty;
         setProduct(db.findProductById(prodId));
+        getSubTotal();
     }
-
+    
+    public final double getSubTotal(){
+        return qty * product.getUnitCost();
+    }
+    
+    public final double getDiscountAmount(){
+        return product.getDiscount().getDiscountAmt(qty, product.getUnitCost());
+    }
     public final Product getProduct() {
         return product;
     }
