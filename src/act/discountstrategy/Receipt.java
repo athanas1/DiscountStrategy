@@ -5,7 +5,6 @@
  */
 package act.discountstrategy;
 
-
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,7 +23,7 @@ public class Receipt {
     private double total;
     private final Date date = Calendar.getInstance().getTime();
 
-    public Receipt(String custId, DatabaseStrategy db,String storeName) {
+    public Receipt(String custId, DatabaseStrategy db, String storeName) {
         setDb(db);
         setCustomer(db.findCustomerById(custId));
         setStoreName(storeName);
@@ -33,7 +32,7 @@ public class Receipt {
 
     public final void addItemToReceipt(String prodId, int qty) {
         LineItem item = new LineItem(prodId, qty, db);
-        
+
         addItemToArray(lineItems, item);
 //        LineItem[] tempArray = new LineItem[lineItems.length + 1];
 //
@@ -49,6 +48,20 @@ public class Receipt {
         tempArray[tempArray.length - 1] = item;
         origArray = tempArray;
         lineItems = origArray;
+    }
+
+    public final String ReceiptFormat() {
+        double receiptTotal = getTotalAfterDiscount();
+        StringBuilder sBuilder;
+        sBuilder = new StringBuilder(storeName + "\n" + customer.getCustName() + "\n" + date + "\n");
+        LineItem[] items = getLineItems();
+        for (LineItem i : items) {
+            sBuilder.append(i.getLineItem());
+        }
+        sBuilder.append("\n");
+        sBuilder.append("Total after discounts").append(nf.format(receiptTotal));
+        String BuildertoString = sBuilder.toString();
+        return BuildertoString;
     }
 
     public final DatabaseStrategy getDb() {
@@ -78,7 +91,6 @@ public class Receipt {
         this.lineItems = lineItems;
     }
 
-
     public String getStoreName() {
         return storeName;
     }
@@ -87,8 +99,8 @@ public class Receipt {
         //needs validation
         this.storeName = storeName;
     }
-    
-     public final double getSubTotalBeforeDiscount() {
+
+    public final double getSubTotalBeforeDiscount() {
         total = 0.0;
         for (LineItem item : lineItems) {
             total += item.getSubTotal();
@@ -96,26 +108,11 @@ public class Receipt {
         return total;
     }
 
-     public Date getDate(){
-         return date;
-     }
-     
-     public final String ReceiptFormat(){
-         double receiptTotal = getTotalAfterDiscount();
-         StringBuilder sBuilder;
-         sBuilder = new StringBuilder(storeName + "/n" + customer.getCustName() + "/n" + date + "/n");
-         LineItem[] items = getLineItems();
-         for(LineItem i : items) {
-             sBuilder.append(i.getLineItem());
-         }
-         sBuilder.append("/n");
-         sBuilder.append("Total after discounts").append(nf.format(receiptTotal));
-         String BuildertoString = sBuilder.toString();
-         return BuildertoString;
-     }
-     
-     
-      public final double getTotalAfterDiscount() {
+    public Date getDate() {
+        return date;
+    }
+
+    public final double getTotalAfterDiscount() {
         total = 0.0;
         for (LineItem i : lineItems) {
             total += i.getSubTotal();

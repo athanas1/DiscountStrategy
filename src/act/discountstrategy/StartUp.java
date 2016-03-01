@@ -23,9 +23,6 @@ public class StartUp {
         // Start talking to objects
         Register register = new Register();
         register.startNewSale("100", db,"JC Penny");
-
-        Customer customer = register.getReceipt().getCustomer();
-        System.out.println("Customer " + customer.getCustName() + " found and added to receipt");
         
         register.addItemToSale("11", 2);
         register.addItemToSale("22", 1);

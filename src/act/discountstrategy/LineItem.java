@@ -25,7 +25,7 @@ public class LineItem {
     }
     
     public String getLineItem(){
-        String item = this.getProduct().getProdId() + " " + this.getProduct().getProdName() + " " + this.getQty();
+        String item = this.getProduct().getProdId() + " " + this.getProduct().getProdName() + " " + this.getQty() + " " + nf.format(product.getUnitCost()*this.qty) + "\n";
         return item;
     }
     public final double getSubTotal(){
