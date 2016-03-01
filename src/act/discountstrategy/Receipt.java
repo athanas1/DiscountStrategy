@@ -51,7 +51,8 @@ public class Receipt {
     }
 
     public final String ReceiptFormat() {
-        double receiptTotal = getTotalAfterDiscount();
+        double receiptTotal = getTotal();
+        double discountTotal = getAmountSaved();
         StringBuilder sBuilder;
         sBuilder = new StringBuilder(storeName + "\n" + customer.getCustName() + "\n" + date + "\n");
         LineItem[] items = getLineItems();
@@ -59,7 +60,9 @@ public class Receipt {
             sBuilder.append(i.getLineItem());
         }
         sBuilder.append("\n");
-        sBuilder.append("Total after discounts").append(nf.format(receiptTotal));
+        sBuilder.append("Total: ").append(nf.format(receiptTotal));
+        sBuilder.append("\n");
+        sBuilder.append("You saved: ").append(nf.format(discountTotal));
         String BuildertoString = sBuilder.toString();
         return BuildertoString;
     }
@@ -100,10 +103,10 @@ public class Receipt {
         this.storeName = storeName;
     }
 
-    public final double getSubTotalBeforeDiscount() {
+    public final double getAmountSaved() {
         total = 0.0;
         for (LineItem item : lineItems) {
-            total += item.getSubTotal();
+            total += item.getDiscountAmount();
         }
         return total;
     }
@@ -112,7 +115,7 @@ public class Receipt {
         return date;
     }
 
-    public final double getTotalAfterDiscount() {
+    public final double getTotal() {
         total = 0.0;
         for (LineItem i : lineItems) {
             total += i.getSubTotal();

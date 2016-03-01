@@ -6,6 +6,7 @@
 package act.discountstrategy;
 
 import java.text.NumberFormat;
+
 /**
  *
  * @author Alex
@@ -14,27 +15,28 @@ public class LineItem {
 
     private Product product;
     private int qty;
-    NumberFormat nf = NumberFormat.getCurrencyInstance();
     private double[] subtotals;
-    
-    
+    NumberFormat nf = NumberFormat.getCurrencyInstance();
+
     public LineItem(String prodId, int qty, DatabaseStrategy db) {
         this.qty = qty;
         setProduct(db.findProductById(prodId));
         getSubTotal();
     }
-    
-    public String getLineItem(){
-        String item = this.getProduct().getProdId() + " " + this.getProduct().getProdName() + " " + this.getQty() + " " + nf.format(product.getUnitCost()*this.qty) + "\n";
+
+    public String getLineItem() {
+        String item = this.getProduct().getProdId() + " " + this.getProduct().getProdName() + " " + this.getQty() + " " + nf.format(product.getUnitCost() * this.qty) + "\n";
         return item;
     }
-    public final double getSubTotal(){
+
+    public final double getSubTotal() {
         return qty * product.getUnitCost();
     }
-    
-    public final double getDiscountAmount(){
+
+    public final double getDiscountAmount() {
         return product.getDiscount().getDiscountAmt(qty, product.getUnitCost());
     }
+
     public final Product getProduct() {
         return product;
     }
@@ -52,6 +54,5 @@ public class LineItem {
         // needs validation
         this.qty = qty;
     }
-
 
 }

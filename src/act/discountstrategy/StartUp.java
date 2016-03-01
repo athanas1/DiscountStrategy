@@ -22,14 +22,14 @@ public class StartUp {
 
         // Start talking to objects
         Register register = new Register();
-        register.startNewSale("100", db,"JC Penny");
-        
+        register.startNewSale("100", db, "JC Penny");
+
         register.addItemToSale("11", 2);
         register.addItemToSale("22", 1);
         register.addItemToSale("33", 3);
-        
-     register.endSale(gui);
-     register.endSale(COutput);
+
+        register.endSale(gui);
+        register.endSale(COutput);
     }
 
 }
