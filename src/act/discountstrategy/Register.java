@@ -18,8 +18,8 @@ public class Register {
         receipt = new Receipt(custId, db, this.storeName);
     }
 
-    public final void endSale() {
-
+    public final void endSale(OutputStrategy output) {
+        output.printReceipt(receipt);
     }
 
     public final void addItemToSale(String prodId, int qty) {

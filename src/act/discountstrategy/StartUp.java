@@ -17,6 +17,8 @@ public class StartUp {
     public static void main(String[] args) {
         // KLUDGE: do configuration here 
         DatabaseStrategy db = new FakeDatabase();
+        ConsoleOutput COutput = new ConsoleOutput();
+        GuiOutput gui = new GuiOutput();
 
         // Start talking to objects
         Register register = new Register();
@@ -29,10 +31,8 @@ public class StartUp {
         register.addItemToSale("22", 1);
         register.addItemToSale("33", 3);
         
-        LineItem[] items = register.getReceipt().getLineItems();
-        for(LineItem item : items) {
-            System.out.println(item.getProduct().getProdName());
-        }
+     register.endSale(gui);
+     register.endSale(COutput);
     }
 
 }
