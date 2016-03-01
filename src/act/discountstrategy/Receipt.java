@@ -5,6 +5,11 @@
  */
 package act.discountstrategy;
 
+
+import java.text.NumberFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  *
  * @author athanas1
@@ -14,10 +19,15 @@ public class Receipt {
     private DatabaseStrategy db;
     private Customer customer;
     private LineItem[] lineItems;
+    NumberFormat nf = NumberFormat.getCurrencyInstance();
+    private String storeName;
+    private double total;
+    private final Date date = Calendar.getInstance().getTime();
 
-    public Receipt(String custId, DatabaseStrategy db) {
+    public Receipt(String custId, DatabaseStrategy db,String storeName) {
         setDb(db);
         setCustomer(db.findCustomerById(custId));
+        setStoreName(storeName);
         lineItems = new LineItem[0];
     }
 
@@ -64,8 +74,52 @@ public class Receipt {
     }
 
     public void setLineItems(LineItem[] lineItems) {
+        // needs validation
         this.lineItems = lineItems;
     }
-    
 
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        //needs validation
+        this.storeName = storeName;
+    }
+    
+     public final double getSubTotalBeforeDiscount() {
+        total = 0.0;
+        for (LineItem item : lineItems) {
+            total += item.getSubTotal();
+        }
+        return total;
+    }
+
+     public Date getDate(){
+         return date;
+     }
+     
+     public final String ReceiptFormat(){
+         double receiptTotal = getTotalAfterDiscount();
+         StringBuilder sBuilder;
+         sBuilder = new StringBuilder(storeName + "/n" + customer.getCustName() + "/n" + date + "/n");
+         LineItem[] items = getLineItems();
+         for(LineItem i : items) {
+             sBuilder.append(i.getLineItem());
+         }
+         sBuilder.append("/n");
+         sBuilder.append("Total after discounts").append(nf.format(receiptTotal));
+         String BuildertoString = sBuilder.toString();
+         return BuildertoString;
+     }
+     
+     
+      public final double getTotalAfterDiscount() {
+        total = 0.0;
+        for (LineItem i : lineItems) {
+            total += i.getSubTotal();
+        }
+        return total;
+    }
 }

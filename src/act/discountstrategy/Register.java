@@ -12,10 +12,10 @@ package act.discountstrategy;
 public class Register {
 
     private Receipt receipt;
-    private String storeName;
+    private String storeName = "JC Penny";
 
-    public final void startNewSale(String custId, DatabaseStrategy db) {
-        receipt = new Receipt(custId, db);
+    public final void startNewSale(String custId, DatabaseStrategy db, String storeName) {
+        receipt = new Receipt(custId, db, this.storeName);
     }
 
     public final void endSale() {
