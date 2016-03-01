@@ -13,7 +13,7 @@ public class ConsoleOutput implements OutputStrategy {
 
     @Override
     public void printReceipt(Receipt r) {
-        System.out.println(r.ReceiptFormat());
+        System.out.println(r.getReceiptData());
     }
     
 }

@@ -13,7 +13,7 @@ public class GuiOutput implements OutputStrategy {
 
     @Override
     public void printReceipt(Receipt r) {
-      JOptionPane.showMessageDialog(null, r.ReceiptFormat());
+      JOptionPane.showMessageDialog(null, r.getReceiptData());
     }
     
 }

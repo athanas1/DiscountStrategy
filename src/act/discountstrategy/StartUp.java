@@ -10,7 +10,7 @@ package act.discountstrategy;
  * @author athanas1
  */
 public class StartUp {
-
+// To do on Mid Term  Validation, Java doc writeup's, NO MAGIC NUMBERS, Open Close principal
     /**
      * @param args the command line arguments
      */

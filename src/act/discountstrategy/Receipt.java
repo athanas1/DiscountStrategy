@@ -14,11 +14,11 @@ import java.util.Date;
  * @author athanas1
  */
 public class Receipt {
-
+    private LineItem lineItem;
     private DatabaseStrategy db;
     private Customer customer;
     private LineItem[] lineItems;
-    NumberFormat nf = NumberFormat.getCurrencyInstance();
+    private NumberFormat nf = NumberFormat.getCurrencyInstance();
     private String storeName;
     private double total;
     private final Date date = Calendar.getInstance().getTime();
@@ -30,6 +30,7 @@ public class Receipt {
         lineItems = new LineItem[0];
     }
 
+    // adding item to the receipt
     public final void addItemToReceipt(String prodId, int qty) {
         LineItem item = new LineItem(prodId, qty, db);
 
@@ -41,6 +42,7 @@ public class Receipt {
 //        lineItems = tempArray;
     }
 
+    // adding item to the array
     private void addItemToArray(LineItem[] origArray, LineItem item) {
         LineItem[] tempArray = new LineItem[origArray.length + 1];
 
@@ -49,10 +51,13 @@ public class Receipt {
         origArray = tempArray;
         lineItems = origArray;
     }
+// using StringBuilder to create what the Receipt will output as
 
-    public final String ReceiptFormat() {
-        double receiptTotal = getTotal();
+    public final String getReceiptData() {
+        
+        double receiptTotal = getSubTotal();
         double discountTotal = getAmountSaved();
+        double grandTotal = getTotal();
         StringBuilder sBuilder;
         sBuilder = new StringBuilder(storeName + "\n" + customer.getCustName() + "\n" + date + "\n");
         LineItem[] items = getLineItems();
@@ -60,9 +65,12 @@ public class Receipt {
             sBuilder.append(i.getLineItem());
         }
         sBuilder.append("\n");
-        sBuilder.append("Total: ").append(nf.format(receiptTotal));
+        sBuilder.append("Total before: ").append(nf.format(getSubTotal()));
         sBuilder.append("\n");
         sBuilder.append("You saved: ").append(nf.format(discountTotal));
+        sBuilder.append("\n");
+        sBuilder.append("Your grand total is: ").append(nf.format(grandTotal));
+
         String BuildertoString = sBuilder.toString();
         return BuildertoString;
     }
@@ -70,6 +78,7 @@ public class Receipt {
     public final DatabaseStrategy getDb() {
         return db;
     }
+// needs to be validated
 
     public final void setDb(DatabaseStrategy db) {
         // Needs validation
@@ -79,6 +88,7 @@ public class Receipt {
     public final Customer getCustomer() {
         return customer;
     }
+// needs to be validated
 
     public final void setCustomer(Customer customer) {
         // Needs validation
@@ -88,6 +98,7 @@ public class Receipt {
     public LineItem[] getLineItems() {
         return lineItems;
     }
+// needs to be validated
 
     public void setLineItems(LineItem[] lineItems) {
         // needs validation
@@ -97,6 +108,7 @@ public class Receipt {
     public String getStoreName() {
         return storeName;
     }
+// needs to be validated
 
     public void setStoreName(String storeName) {
         //needs validation
@@ -115,11 +127,15 @@ public class Receipt {
         return date;
     }
 
-    public final double getTotal() {
+    public final double getSubTotal() {
         total = 0.0;
         for (LineItem i : lineItems) {
             total += i.getSubTotal();
         }
         return total;
+    }
+
+    public final double getTotal() {
+        return getSubTotal() - getAmountSaved();
     }
 }

@@ -16,16 +16,18 @@ public class LineItem {
     private Product product;
     private int qty;
     private double[] subtotals;
-    NumberFormat nf = NumberFormat.getCurrencyInstance();
-
+    private NumberFormat nf = NumberFormat.getCurrencyInstance();
+    // constructor
     public LineItem(String prodId, int qty, DatabaseStrategy db) {
         this.qty = qty;
         setProduct(db.findProductById(prodId));
         getSubTotal();
     }
+    
 
+// create format for LineItem
     public String getLineItem() {
-        String item = this.getProduct().getProdId() + " " + this.getProduct().getProdName() + " " + this.getQty() + " " + nf.format(product.getUnitCost() * this.qty) + "\n";
+        String item = this.getProduct().getProdId() + "\t " + this.getProduct().getProdName() + " " + this.getQty() + "\t " + nf.format(product.getUnitCost() * this.qty) + "\n";
         return item;
     }
 
@@ -36,11 +38,14 @@ public class LineItem {
     public final double getDiscountAmount() {
         return product.getDiscount().getDiscountAmt(qty, product.getUnitCost());
     }
+    public final double getTotalBeforeDiscount(){
+        return getSubTotal() + getDiscountAmount();
+    }
 
     public final Product getProduct() {
         return product;
     }
-
+    // Product parameter is not validation
     public final void setProduct(Product product) {
         //needs validation
         this.product = product;
